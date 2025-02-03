@@ -1,4 +1,5 @@
-export const seedData = [
+import { IRecord } from '@/components/types/record';
+export const seedData: Array<IRecord> = [
   {
     id: 1,
     company: 'Binary Builders',
