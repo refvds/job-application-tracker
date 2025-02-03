@@ -32,7 +32,7 @@ export const JobTable = () => {
           'border rounded-lg border-gray-300 overflow-hidden table-fixed ',
         )}
       >
-        <TableHeader className='overflow-hidden '>
+        <TableHeader className='overflow-hidden  bg-white'>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow
               key={headerGroup.id}
@@ -87,7 +87,7 @@ export const JobTable = () => {
             </TableRow>
           ))}
         </TableHeader>
-        <TableBody>
+        <TableBody className='bg-white/50 backdrop-blur-md w-full'>
           {table.getRowModel().rows.map((row) => (
             <TableRow key={row.id}>
               <TableCell>
@@ -98,6 +98,7 @@ export const JobTable = () => {
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}
+              <TableCell></TableCell>
             </TableRow>
           ))}
         </TableBody>

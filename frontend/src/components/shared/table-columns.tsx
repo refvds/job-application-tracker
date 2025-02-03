@@ -50,6 +50,7 @@ export const tableColumns: ColumnDef<IRecord>[] = [
     accessorKey: 'note',
     header: 'Note',
     enableSorting: true,
+
     // cell: ({ cell }) => {
     //   return <ExpandableNote text={cell.row.original.note} />;
     // },
