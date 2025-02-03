@@ -26,10 +26,10 @@ export const JobTable = () => {
   });
 
   return (
-    <div className='w-full max-h-[800px] overflow-y-scroll rounded-lg border'>
+    <div className='max-h-[800px] overflow-y-scroll rounded-lg border lg:custom-scroll'>
       <Table
         className={cn(
-          'border rounded-lg border-gray-300 overflow-hidden table-fixed ',
+          'border rounded-lg border-gray-300 overflow-hidden table-fixed w-full',
         )}
       >
         <TableHeader className='overflow-hidden  bg-white'>
