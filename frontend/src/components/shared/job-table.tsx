@@ -32,7 +32,7 @@ export const JobTable = () => {
           'border rounded-lg border-gray-300 overflow-hidden table-fixed w-full',
         )}
       >
-        <TableHeader className='overflow-hidden  bg-white'>
+        <TableHeader className='overflow-hidden  bg-white relative z-10'>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow
               key={headerGroup.id}
@@ -87,20 +87,51 @@ export const JobTable = () => {
             </TableRow>
           ))}
         </TableHeader>
-        <TableBody className='bg-white/50 backdrop-blur-md w-full'>
-          {table.getRowModel().rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>
-                <Checkbox />
+        <TableBody className='bg-white/50 backdrop-blur-md  w-full'>
+          {table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map((row) => {
+              return (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && 'selected'}
+                  className='max-sm:bg-white/50 max-sm:flex max-sm:flex-col max-sm:w-screen duration-200 ease-in-out  md:hover:translate-y-[-9px] md:hover:translate-x-[4px]  relative md:hover:backdrop-blur-lg transition-all '
+                >
+                  <TableCell className='p-4 w-56 max-sm:hidden'>
+                    <Checkbox className='cursor-pointer' />
+                  </TableCell>
+                  {row.getVisibleCells().map((cell) => {
+                    return (
+                      <TableCell
+                        key={cell.id}
+                        className='text-sm p-2 max-sm:bg-inherit'
+                      >
+                        <div className='max-sm:flex max-sm:justify-between'>
+                          <div className='hidden max-sm:block w-full'>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )}
+                          </div>
+                          <div className='w-full max-sm:text-middle'>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )}
+                          </div>
+                        </div>
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length} className='h-24 text-center'>
+                No results.
               </TableCell>
-              {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </TableCell>
-              ))}
-              <TableCell></TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </Table>
     </div>
