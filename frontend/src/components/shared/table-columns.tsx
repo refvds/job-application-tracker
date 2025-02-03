@@ -3,6 +3,7 @@ import { IRecord } from '../types/record';
 import { SalaryCell } from './salary-cell';
 import { Badge } from '../ui/badge';
 import { cn } from '@/lib/utils';
+import { ExpandableNote } from './expandable-note';
 
 type CustomColumnDef<TData> = ColumnDef<TData> & {
   headerClassName?: string;
@@ -56,5 +57,8 @@ export const tableColumns: CustomColumnDef<IRecord>[] = [
     accessorKey: 'note',
     header: 'Note',
     enableSorting: true,
+    cell: ({ cell }) => {
+      return <ExpandableNote text={cell.row.original.note} />;
+    },
   },
 ];
