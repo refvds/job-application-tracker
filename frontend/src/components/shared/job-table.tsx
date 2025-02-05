@@ -17,6 +17,9 @@ import { ArrowDown, ArrowUp, ArrowUpDown, CirclePlus } from 'lucide-react';
 import { Checkbox } from '../ui/checkbox';
 import { seedData as data } from '@/constants/seed';
 import { tableColumns as columns } from './table-columns';
+import { Modal } from '../ui/modal';
+import { TableForm } from './table-form';
+import { useTableActions } from '@/hooks/use-table-actions';
 
 export const JobTable = () => {
   const table = useReactTable({
@@ -24,6 +27,7 @@ export const JobTable = () => {
     data,
     getCoreRowModel: getCoreRowModel(),
   });
+  const { openModal, handleClickModal, setOpenModal } = useTableActions();
 
   return (
     <div className='max-h-[800px] overflow-y-scroll rounded-lg border lg:custom-scroll'>
@@ -39,7 +43,10 @@ export const JobTable = () => {
               className='border-b border-gray-300 '
             >
               <TableHead className='p-0 w-14 max-sm:w-10  '>
-                <Button className='max-sm:w-3'>
+                <Button
+                  className='max-sm:w-3'
+                  onClick={() => setOpenModal(true)}
+                >
                   <CirclePlus size={18} />
                 </Button>
               </TableHead>
@@ -134,6 +141,9 @@ export const JobTable = () => {
           )}
         </TableBody>
       </Table>
+      <Modal open={openModal} handleOpen={handleClickModal}>
+        <TableForm closeForm={handleClickModal} />
+      </Modal>
     </div>
   );
 };
