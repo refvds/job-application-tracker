@@ -2,6 +2,8 @@ import {
   getCoreRowModel,
   useReactTable,
   flexRender,
+  getPaginationRowModel,
+  PaginationState,
 } from '@tanstack/react-table';
 import {
   Table,
@@ -13,20 +15,40 @@ import {
 } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
-import { ArrowDown, ArrowUp, ArrowUpDown, CirclePlus } from 'lucide-react';
+import {
+  ArrowDown,
+  ArrowUp,
+  ArrowUpDown,
+  CirclePlus,
+  Pencil,
+} from 'lucide-react';
 import { Checkbox } from '../ui/checkbox';
 import { seedData as data } from '@/constants/seed';
 import { tableColumns as columns } from './table-columns';
 import { Modal } from '../ui/modal';
 import { TableForm } from './table-form';
 import { useTableActions } from '@/hooks/use-table-actions';
+import { Separator } from '../ui/separator';
+import { DeleteButton } from './delete-button';
+import { TablePagination } from './table-pagination';
+import { useState } from 'react';
 
 export const JobTable = () => {
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
   const table = useReactTable({
     columns,
     data,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    onPaginationChange: setPagination,
+    state: {
+      pagination,
+    },
   });
+
   const { openModal, handleClickModal, setOpenModal } = useTableActions();
 
   return (
@@ -129,6 +151,24 @@ export const JobTable = () => {
                       </TableCell>
                     );
                   })}
+                  <TableCell className='group max-sm:hidden'>
+                    <div className='flex h-5 items-center space-x-3 text-sm'>
+                      <Pencil
+                        className=' touch-screen:block cursor-pointer text-orange-500 hidden group-hover:block'
+                        size={16}
+                        style={{
+                          filter:
+                            'drop-shadow(0px 0px 10px rgba(247, 149, 1, 0.925))',
+                        }}
+                        // onClick={() => handleEdit((row.original as TData).id)}
+                      />
+                      <Separator orientation='vertical' />
+                      <DeleteButton
+                      // onClick={() => handleDeleteRecords(row.original)}
+                      // records={records}
+                      />
+                    </div>
+                  </TableCell>
                 </TableRow>
               );
             })
@@ -141,9 +181,12 @@ export const JobTable = () => {
           )}
         </TableBody>
       </Table>
+
       <Modal open={openModal} handleOpen={handleClickModal}>
         <TableForm closeForm={handleClickModal} />
       </Modal>
+
+      <TablePagination table={table} />
     </div>
   );
 };
