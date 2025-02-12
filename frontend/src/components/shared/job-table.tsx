@@ -32,6 +32,7 @@ import { Separator } from '../ui/separator';
 import { DeleteButton } from './delete-button';
 import { TablePagination } from './table-pagination';
 import { useState } from 'react';
+import { TableShowSort } from './table-show-sort';
 
 export const JobTable = () => {
   const [pagination, setPagination] = useState<PaginationState>({
@@ -187,6 +188,11 @@ export const JobTable = () => {
       </Modal>
 
       <TablePagination table={table} />
+      <TableShowSort
+        data={data}
+        setPagination={setPagination}
+        pagination={pagination}
+      />
     </div>
   );
 };
